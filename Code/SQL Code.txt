@@ -1,0 +1,143 @@
+Project Code
+DROP Schema IF EXISTS `Company`;
+CREATE SCHEMA IF NOT EXISTS `Company`;
+USE `Company` ;
+# table 1- Company Agent
+CREATE TABLE IF NOT EXISTS `Company`.`Agents` (
+  `Agent ID` 				INT(4) NOT NULL,
+  `Agent Last Name` 		CHAR(25) NOT NULL,
+  `Agency First Name` 		CHAR(25) NOT NULL,
+  PRIMARY KEY (`Agent ID`));
+# table 2- Customer
+CREATE TABLE IF NOT EXISTS `Company`.`Customer` (
+  `CustomerID` 				VARCHAR(20) NOT NULL,
+  `CustomerLastName` 		CHAR(30) NOT NULL,
+  `CustomerFirstName` 		CHAR(30) NOT NULL,
+  `Customer Address` 		VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`CustomerID`));
+# table 3- Booking
+CREATE TABLE IF NOT EXISTS `Company`.`Booking` (
+  `BookingsID` 					INT(10) NOT NULL,
+  `Booking Status` 				VARCHAR(45) NOT NULL,
+  `DateofBooking` 				DATE NOT NULL,
+  `Customer_CustomerID` 		VARCHAR(20) NOT NULL,
+  `Agents_Agent ID` 	INT(10) NOT NULL,
+  PRIMARY KEY (`BookingsID`),
+  CONSTRAINT `fk_Bookings_Customer1`
+    FOREIGN KEY (`Customer_CustomerID`)
+    REFERENCES `Company`.`Customer` (`CustomerID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_Booking_Company Agents1`
+    FOREIGN KEY (`Agents_Agent ID`)
+    REFERENCES `Company`.`Agents` (`Agent ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+# table 4- Payments
+CREATE TABLE IF NOT EXISTS `Company`.`Payments` (
+  `PaymentID` 				INT(5) NOT NULL,
+  `PaymentAmount` 			VARCHAR(45) NOT NULL,
+  `PaymentDate` 			VARCHAR(45) NOT NULL,
+  `PaymentMode` 			CHAR(45) NOT NULL,
+  `Booking_BookingsID` 		INT(10) NOT NULL,
+  PRIMARY KEY (`PaymentID`),
+  CONSTRAINT `fk_Payments_Bookings1`
+    FOREIGN KEY (`Booking_BookingsID`)
+    REFERENCES `Company`.`Booking` (`BookingsID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+# table 5- Services
+CREATE TABLE IF NOT EXISTS `Company`.`Services` (
+  `ServicesID` 				INT(20) NOT NULL,
+  `ServiceDetail`		 	VARCHAR(45) NOT NULL,
+  `RestaurantDetail` 		VARCHAR(45) NOT NULL,
+  `TransportMode` 			VARCHAR(45) NOT NULL,
+  `Booking_BookingsID` 		INT(10) NOT NULL,
+  PRIMARY KEY (`ServicesID`),
+  CONSTRAINT `fk_Services_Booking1`
+    FOREIGN KEY (`Booking_BookingsID`)
+    REFERENCES `Company`.`Booking` (`BookingsID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+    
+    
+/*****   ITEM Data   ************************************************************/
+
+# Compmany Agent Data
+INSERT INTO  Agents VALUES (1989, 'Singh','Manisha');
+INSERT INTO  Agents VALUES (2990, 'Suhag','Bhupender');
+INSERT INTO  Agents VALUES (1591,'Chahal','Nisha ');
+INSERT INTO  Agents VALUES (1286,'Yusuf','Matt');
+INSERT INTO  Agents VALUES (2293,'Kim','Jje');
+INSERT INTO  Agents VALUES (1384,'Wang','Xi');
+INSERT INTO  Agents VALUES (2090,'Max','Chritian');
+INSERT INTO  Agents VALUES (1986,'Winget','Jennifer');
+SELECT * FROM Agents;
+# Customer Data
+INSERT INTO Customer VALUES ('Saini01Jay', 'Saini', 'Jay', '4222 Avalon way	Seattle	Washington	USA');
+INSERT INTO Customer VALUES ('Singh02Bhupi', 'Singh', 'Bhupi','3411	Palmer Hwy	Sanfrancisco California	USA');
+INSERT INTO Customer VALUES ('Suhag03Krish', 'Suhag', 'Krish','2770	Prakash Society	Mumbai	Maharashtra	India');
+INSERT INTO Customer VALUES ('Kalra04Tanmay', 'Kalra', 'Tanmay','154	Aspen Road	Boston	MA	USA');
+INSERT INTO Customer VALUES ('Young05Taneja', 'Young', 'Taneja','1554	Sector 45	Hyderabad	Andhrapradesh	India');
+INSERT INTO Customer VALUES ('Tuli06Sneha', 'Tuli', 'Sneha','2000	Taylor street	Austin	Texas	USA');
+INSERT INTO Customer VALUES ('Arya07Neha', 'Arya', 'Neha','529 Kent Street Sydney	New South Wales	Aus');
+INSERT INTO Customer VALUES ('Beniwal08Kuldeep', 'Beniwal', 'Kuldeep','115	Hickson Road	Sydney	New South Wales	Aus');
+SELECT * FROM Customer;
+# Booking Data
+INSERT INTO Booking VALUES (1,'confirmed',"2017-05-05", 'Saini01Jay', 1989);
+INSERT INTO Booking VALUES (2, 'cancelled',"2017-06-15",'Singh02Bhupi', 2990);
+INSERT INTO Booking VALUES (3, 'confirmed', "2017-07-25",'Suhag03Krish', 1591 );
+INSERT INTO Booking VALUES (4, 'pending',"2017-08-12",'Kalra04Tanmay',  1286);
+INSERT INTO Booking VALUES (5, 'confirmed',"2017-12-30",'Young05Taneja', 2293);
+INSERT INTO Booking VALUES (6, 'confirmed',"2017-01-20",'Tuli06Sneha',1384);
+INSERT INTO Booking VALUES (7, 'cancelled',"2018-04-10",'Arya07Neha', 2090);
+INSERT INTO Booking VALUES (8, 'pending',"2018-05-05",'Beniwal08Kuldeep',1986);
+SELECT * FROM Booking;
+# Payment Data
+INSERT INTO Payments VALUES (11,2000,"2017-5-10",'Credit', 1);
+INSERT INTO Payments VALUES (12, 4000,"2017-06-11",'Debit',2);
+INSERT INTO Payments VALUES (13,3300,"2017-07-25",'Cash',3);
+INSERT INTO Payments VALUES (14,4000,"2017-08-17",'EMI',4);
+INSERT INTO Payments VALUES (15,6000,"2018-01-05",'Internet Banking',5);
+INSERT INTO Payments VALUES (16,42000, "2017-01-25",'Check',6);
+INSERT INTO Payments VALUES (17,12000, "2018-04-15",'Cryptocurrency',7);
+INSERT INTO Payments VALUES (18,12000, "2018-05-15",'Cryptocurrency',8);
+SELECT * FROM Payments;
+# Services Data
+INSERT INTO Services VALUES ('10', 'Deluxe', 'Mexican', 'Train',1);
+INSERT INTO Services VALUES ('20', 'Economy', 'Indian', 'Air',2);
+INSERT INTO Services VALUES ('30', 'Regular', 'Chinese', 'Driving',3);
+INSERT INTO Services VALUES ('40','Economy','Indian','Air',4);
+INSERT INTO Services VALUES ('50','Regular','Chinese',	'Drivinig',	5);
+INSERT INTO Services VALUES ('60','Economy','Indian','Air',6);
+INSERT INTO Services VALUES ('70','Deluxe', 'Mexican','Train',7);
+INSERT INTO Services VALUES ('80','Economy','Indian',	'Air',8);
+SELECT * FROM Services;
+
+/*some important Queries*/
+
+#To calculate the total received payment for total number of booking
+select COUNT(Bookings_BookingsID) as TotalBooking, 
+sum(PaymentAmount) as TotalAmount from Payments;
+
+#  To check the status for customer 
+select `BookingsID`, `Customer_CustomerID`, `Booking Status` from Booking
+where `Booking Status` = "cancelled";
+
+# to check service and payment details
+select Services.Booking_BookingsID, ServicesID, servicedetail, paymentmode, restaurantdetail
+from Services left join Payments
+on Services.Booking_BookingsID = Payments.Booking_BookingsID
+order by Booking_BookingsID, ServicesID asc;
+
+# To check previous record for customer with same name
+select `CustomerLastName`, `CustomerFirstName` , `Customer Address` from Customer
+where `CustomerID` like "S%";
+
+# To add new booking details
+INSERT INTO Booking VALUES (9, 'confirmed',"2017-08-12",'Chahal09Mani',  1280);
+
+# Change the status from pending to confirmed 
+Update Booking
+ set `Booking Status`  = "Cancelled";
+
