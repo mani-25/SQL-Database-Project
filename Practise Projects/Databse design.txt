@@ -1,5 +1,6 @@
-Cape Codd Outdoor Sports - Create Database and Tables  									                 
-## Create a databse schema with different table
+Cape Codd Outdoor Sports - Create Database and Tables  	
+								                 
+# Create a databse schema with different table
 DROP Schema IF EXISTS CapeCodd;
 
 CREATE DATABASE IF NOT EXISTS CapeCodd;
