@@ -1,5 +1,9 @@
 Project Code
+
+
+#First check if the schema already exist or not
 DROP Schema IF EXISTS `Company`;
+#Create new schema
 CREATE SCHEMA IF NOT EXISTS `Company`;
 USE `Company` ;
 # table 1- Company Agent
